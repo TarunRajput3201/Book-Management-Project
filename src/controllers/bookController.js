@@ -33,19 +33,20 @@ const {
 
 const createBook = async function (req, res) {
   try {
-    let { title, excerpt, userId, ISBN, category, subcategory, releasedAt,bookCover } = req.files;
+    let { title, excerpt, userId, ISBN, category, subcategory, releasedAt,bookCover } = req.body;
     let book = {};
-    if (!validateRequest(req.files)) {
+    if (!validateRequest(req.body)) {
       return res
         .status(400)
         .send({ status: false, message: "Please input valid request" });
     }
-    if (bookCover && bookCover.length > 0) {
-      let uploadedFileURL = await uploadFile(bookCover[0]);
+    let cover = req.files;
+    if (cover && cover.length > 0) {
+      let uploadedFileURL = await uploadFile(cover[0]);
       
-      book.bookCover=bookCover
+      book.bookCover=uploadedFileURL
     } else {
-     return  res.status(400).send({status:false, message: "No file found" });
+     return  res.status(400).send({status:false, message: "please provide book cover" });
     }
     if (title) {
       if (!validateString(title)) {
