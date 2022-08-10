@@ -20,9 +20,14 @@ const authenticate = function (req, res, next) {
     jwt.verify(token, "functionup-radon", (err, user) => {
       if (err)
 
-        return res.status(401).send({ status: false, message: "invalid token" });
+        return res.status(401).send({ status: false, message: "please provide valid token" });
       req.user = user
-      
+      let tokenTime = req.user.exp;
+      let createdTime = Date.now()
+
+      if (createdTime > tokenTime) {
+          return res.status(400).send({ status: false, msg: "token is expired, login again" })
+      }
       next();
     });
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const validateEnum = function validateEnum(value) {
+const validateEnum = function(value) {
 
 
   var titleEnum = ["Mr", "Mrs", "Miss"];
@@ -59,7 +59,7 @@ const validateEmail = function (value) {
 };
 
 const validatePassword = function (value) {
-  let re = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/;
+  let re = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,15}$/;
   let validPassword = re.test(value);
 
   if (!validPassword) {
@@ -77,12 +77,13 @@ const validateRequest = function (value) {
 let validateObjectId = function (ObjectId) {
   return mongoose.isValidObjectId(ObjectId)
 }
+// mongoose.Types.ObjectId.isValid
+
 const passwordLength = function (password) {
   if (password.length >= 8 && password.length <= 15) {
     return true;
   } else return false;
 };
-
 
 const isValidISBN = function (ISBN) {
 
@@ -91,6 +92,7 @@ const isValidISBN = function (ISBN) {
   }
   else { return false }
 }
+
 module.exports = {
   validateString,
   convertToArray,
@@ -101,7 +103,6 @@ module.exports = {
   validateNumber,
   validateObjectId,
   passwordLength,
-
   validateEnum,
   isValidISBN
 };
