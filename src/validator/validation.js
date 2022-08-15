@@ -26,26 +26,6 @@ const validateString = function (name) {
   return true;
 };
 
-const checkValue = function (value) {
-  let arrValue = [];
-  value.map((x) => {
-    x = x.trim();
-    if (x.length) arrValue.push(x);
-  });
-  return arrValue.length ? arrValue : false;
-};
-
-const convertToArray = function (value) {
-  if (typeof value == "string") {
-    value = value.trim();
-    if (value) {
-      return [value];
-    }
-  } else if (value?.length > 0) {
-    return checkValue(value);
-  }
-  return false;
-};
 
 const validateEmail = function (value) {
   let re = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -100,7 +80,6 @@ const regxName = function (val) {
 
 module.exports = {
   validateString,
-  convertToArray,
   checkValue,
   validateEmail,
   validatePassword,
