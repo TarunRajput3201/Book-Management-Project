@@ -35,7 +35,7 @@ const createBook = async function (req, res) {
   try {
     let { title, excerpt, userId, ISBN, category, subcategory, releasedAt,bookCover } = req.body;
     let book = {};
-    if (!validateRequest(req.body)) {
+    if (!validateRequest(req.body) || !bookCover) {
       return res
         .status(400)
         .send({ status: false, message: "Please input valid request" });
@@ -125,22 +125,16 @@ const createBook = async function (req, res) {
       return res.status(400).send({ status: false, message: "Category is required" });
     }
 
-    if (subcategory != undefined) {
-      subcategory = convertToArray(subcategory);
-      if (!subcategory) {
-        return res
-          .status(400)
-          .send({ status: false, msg: "Invalid Subcategory." });
-      } else {
-        book.subcategory = subcategory;
-      }
-    } else {
-
-      return res
-        .status(400)
-        .send({ status: false, message: "Subcategory is required" });
+    if(!subcategory){return res.status(400).send({ status: false, message: "subcategory is required" })}
+    let subCat=subcategory.split(",").map(x => (x))
+     let subcat=[]
+    for(let i=0;i<subCat.length;i++){
+      if(!validateString(subCat[i].trim())){return res.status(400).send({ status: false, message: "please provide the subcayegry in each part after comma" })}
+          subcat.push(subCat[i].trim())
     }
+    book.subcategory=subcat
 
+    
 
 
     book.releasedAt = moment(releasedAt).format("YYYY-MM-DD, h:mm:ss a")

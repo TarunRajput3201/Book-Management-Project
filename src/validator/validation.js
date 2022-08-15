@@ -93,6 +93,11 @@ const isValidISBN = function (ISBN) {
   else { return false }
 }
 
+const regxName = function (val) {
+  let regx = /^[a-zA-Z]+([\s][a-zA-Z]+)*$/;
+  return regx.test(val);
+}
+
 module.exports = {
   validateString,
   convertToArray,
@@ -104,5 +109,6 @@ module.exports = {
   validateObjectId,
   passwordLength,
   validateEnum,
-  isValidISBN
+  isValidISBN,
+  regxName
 };

@@ -2,13 +2,7 @@ let userModel = require("../models/userModel")
 let jwt = require("jsonwebtoken")
 const {
     validateString,
-    convertToArray,
-    checkValue,
-    validateEmail,
-    validatePassword,
     validateRequest,
-    validateNumber,
-    isValidObjectId,
     passwordLength,
     validateEnum
 } = require("../validator/validation");
